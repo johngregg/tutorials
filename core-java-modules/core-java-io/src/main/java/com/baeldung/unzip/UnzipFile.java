@@ -12,20 +12,27 @@ public class UnzipFile {
         final String fileZip = "src/main/resources/unzipTest/compressed.zip";
         final File destDir = new File("src/main/resources/unzipTest");
         final byte[] buffer = new byte[1024];
-        final ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
-        ZipEntry zipEntry = zis.getNextEntry();
-        while (zipEntry != null) {
-            final File newFile = newFile(destDir, zipEntry);
-            final FileOutputStream fos = new FileOutputStream(newFile);
-            int len;
-            while ((len = zis.read(buffer)) > 0) {
-                fos.write(buffer, 0, len);
+
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip))) {
+            ZipEntry zipEntry = null;
+
+            while ((zipEntry = zis.getNextEntry()) != null) {
+                final File newFile = newFile(destDir, zipEntry);
+
+                if (zipEntry.isDirectory()) {
+                    newFile.mkdirs();
+                } else {
+                    try (FileOutputStream fos = new FileOutputStream(newFile)) {
+                        int len;
+                        while ((len = zis.read(buffer)) > 0) {
+                            fos.write(buffer, 0, len);
+                        }
+                    }
+                }
+
+                zis.closeEntry();
             }
-            fos.close();
-            zipEntry = zis.getNextEntry();
         }
-        zis.closeEntry();
-        zis.close();
     }
     
     /**

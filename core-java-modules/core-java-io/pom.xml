@@ -183,28 +183,11 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec-maven-plugin.version}</version>
-                <configuration>
-                    <executable>java</executable>
-                    <mainClass>com.baeldung.outofmemoryerror.OutOfMemoryGCLimitExceed</mainClass>
-                    <arguments>
-                        <argument>-Xmx300m</argument>
-                        <argument>-XX:+UseParallelGC</argument>
-                        <argument>-classpath</argument>
-                        <classpath />
-                        <argument>com.baeldung.outofmemoryerror.OutOfMemoryGCLimitExceed</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -267,7 +250,7 @@
         <avaitility.version>1.7.0</avaitility.version>
 
         <!-- maven plugins -->
-        <maven-javadoc-plugin.version>3.0.0-M1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.0.0</maven-javadoc-plugin.version>
         <hsqldb.version>2.4.0</hsqldb.version>
         <esapi.version>2.1.0.1</esapi.version>
         <jmh-generator-annprocess.version>1.19</jmh-generator-annprocess.version>
